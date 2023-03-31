@@ -33,4 +33,10 @@ app.get("/redirect", (req, res) => {
   }
 });
 
+app.get("/exec", (req, res) => {
+  const { input } = req.query;
+  const output = ejs.render("Input is <%= " + input + " %>");
+  res.render("exec", { input, output });
+});
+
 app.listen(3000);
