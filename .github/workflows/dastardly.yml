@@ -8,9 +8,6 @@ jobs:
   analyze:
     name: analyze
     runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
 
     steps:
       - uses: actions/checkout@v3
