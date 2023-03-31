@@ -5,7 +5,7 @@ on:
   push:
 
 jobs:
-  analyze:
+  dastardly:
     name: analyze
     runs-on: ubuntu-latest
 
@@ -39,3 +39,9 @@ jobs:
         uses: projectdiscovery/nuclei-action@main
         with:
           target: 'http://localhost:3000'
+
+      - name: GitHub Workflow artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nuclei.sarif
+          path: nuclei.sarif
