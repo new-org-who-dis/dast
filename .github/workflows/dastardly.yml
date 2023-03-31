@@ -13,6 +13,8 @@ jobs:
       contents: read
 
     steps:
+      - uses: actions/checkout@v3
+
       - id: get-ip
         run: |
           HOST=`ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+'`
