@@ -22,18 +22,27 @@ jobs:
           npm i
           node index.js &
 
-      - name: Run Dastardly Action Step
-        continue-on-error: true
-        uses: PortSwigger/dastardly-github-action@main
+#      - name: Run Dastardly Action Step
+#        continue-on-error: true
+#        uses: PortSwigger/dastardly-github-action@main
+#        with:
+#         target-url: 'http://${{steps.get-ip.outputs.HOST}}:3000'
+#
+#      - name: Publish Test Report
+#        if: always()
+#        uses: mikepenz/action-junit-report@v3
+#        with:
+#         report_paths: '**/dastardly-report.xml'
+#         require_tests: true
+#
+      - name: dast/nuclei
+        uses: boostsecurityio/boostsec-scanner-github@v4
         with:
-         target-url: 'http://${{steps.get-ip.outputs.HOST}}:3000'
-
-      - name: Publish Test Report
-        if: always()                                    # Forces this step to always run
-        uses: mikepenz/action-junit-report@v3
-        with:
-         report_paths: '**/dastardly-report.xml'       # You need to update this path if you pass in a different output filename to the Dastardly action
-         require_tests: true
+          api_token: ${{ secrets.BOOST_API_TOKEN }}
+          api_endpoint: https://api.dev.boostsec.io
+          registry_module: dast/nuclei
+          additional_args: --registry . --offline
+          log_level: DEBUG
 
       - name: Nuclei - Vulnerability Scan
         uses: projectdiscovery/nuclei-action@main
