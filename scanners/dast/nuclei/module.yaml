@@ -13,12 +13,10 @@ steps:
       command:
         docker:
           image: projectdiscovery/nuclei:latest
-          command: -c "$ENTRYPOINT"
+          command: -c 'nuclei -u $TARGET_URL -nm -id "http-missing-security-headers -se /dev/stdout'
           entrypoint: sh
           workdir: /src
           environment:
             TARGET_URL: ${TARGET_URL:-}
-            ENTRYPOINT: >-
-              nuclei -u "$TARGET_URL" -nm -id "http-missing-security-headers -se /tmp/nuclei.sarif &>/dev/null
-              && cat /tmp/nuclei.sarif
+
       format: sarif
