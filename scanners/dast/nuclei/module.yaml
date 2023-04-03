@@ -20,5 +20,5 @@ steps:
             TARGET_URL: ${TARGET_URL:-}
             ENTRYPOINT: |
               nuclei -u "$TARGET_URL" -nm -id "http-missing-security-headers -se /tmp/nuclei.sarif &>/dev/null
-              cat /tmp/nuclei.sarif
+              X=`cat /tmp/nuclei.sarif`
       format: sarif
