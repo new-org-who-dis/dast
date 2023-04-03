@@ -13,11 +13,16 @@ steps:
       command:
         docker:
           image: projectdiscovery/nuclei:latest
-          command: -c 'nuclei -u $TARGET_URL -nm -id http-missing-security-headers -se /tmp/nuclei.sarif &>/dev/null; cat /tmp/nuclei.sarif'
+          command: -c 'nuclei -u $TARGET_URL -nm -irr -id http-missing-security-headers -se /tmp/nuclei.sarif &>/dev/null; cat /tmp/nuclei.sarif'
           entrypoint: sh
           workdir: /src
           environment:
-            TARGET_URL: ${TARGET_URL:-}
+            TARGET_URL: ${TARGET_URL}
             HOME: /tmp
-
       format: sarif
+      post-processor:
+        docker:
+          image: openpolicyagent/opa
+          command: |
+            eval data.sarif.output --bundle scanners/dast/nuclei --stdin-input --format pretty
+          workdir: /src
