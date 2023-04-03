@@ -8,7 +8,7 @@ map_result(r) := o if {
 		"ruleId": r.ruleId,
 		"level": r.level,
 		"message": r.message,
-		"locations": [{"physicalLocation": {"region": {"text": "something"}, "artifactLocation": {"uri": "http://localhost:3000/"}}}],
+		"locations": [{"physicalLocation": {"region": {"snippet": {"text": "sup"}}, "artifactLocation": {"uri": "http://localhost:3000/"}}}],
 	}
 }
 
