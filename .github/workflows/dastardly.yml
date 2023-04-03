@@ -43,7 +43,7 @@ jobs:
           api_token: ${{ secrets.BOOST_API_TOKEN }}
           api_endpoint: https://api.dev.boostsec.io
           registry_module: dast/nuclei
-          additional_args: --registry . --offline
+          additional_args: --registry .
           log_level: DEBUG
 
       - name: Nuclei - Vulnerability Scan
