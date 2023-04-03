@@ -18,6 +18,6 @@ steps:
           workdir: /src
           environment:
             TARGET_URL: ${TARGET_URL:-}
-            XDG_HOME: /tmp
+            XDG_CACHE_HOME: /tmp
 
       format: sarif
