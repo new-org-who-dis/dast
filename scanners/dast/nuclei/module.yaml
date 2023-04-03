@@ -18,7 +18,7 @@ steps:
           workdir: /src
           environment:
             TARGET_URL: ${TARGET_URL:-}
-            ENTRYPOINT: |
+            ENTRYPOINT: >-
               nuclei -u "$TARGET_URL" -nm -id "http-missing-security-headers -se /tmp/nuclei.sarif &>/dev/null
-              X=`cat /tmp/nuclei.sarif`
+              && cat /tmp/nuclei.sarif
       format: sarif
