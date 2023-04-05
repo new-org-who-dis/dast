@@ -13,7 +13,7 @@ steps:
       command:
         docker:
           image: owasp/zap2docker-stable
-          user: 1000
+          workdir: /zap/wrk
           command: |
             -c '
               function run() {
