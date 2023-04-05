@@ -17,8 +17,10 @@ run = {
 	"results": [map_result(r) | r := input.runs[0].results[_]],
 }
 
-output = {
+sarif = {
 	"$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
 	"version": "2.1.0",
 	"runs": [run],
 }
+
+output = input
