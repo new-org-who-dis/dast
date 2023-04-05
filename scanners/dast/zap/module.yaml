@@ -1,0 +1,31 @@
+api_version: 1.0
+
+id: dev/nuclei
+name: nuclei
+namespace: dev/nuclei
+
+config:
+  support_diff_scan: false
+
+
+steps:
+  - scan:
+      command:
+        docker:
+          image: owasp/zap2docker-stable
+          command: -c '$ENTRYPOINT'
+          entrypoint: bash
+          environment:
+            TARGET_URL: ${TARGET_URL}
+            API_FORMAT: ${API_FORMAT:-graphql}
+            ENTRYPOINT: >-
+              mkdir /zap/wrk;
+              /zap/zap-api-scan.py -t "$TARGET_URL" -f "$API_FORMAT" -J "report.json" &>/dev/null;
+              cat report.json
+      format: sarif
+      post-processor:
+        docker:
+          image: openpolicyagent/opa
+          command: |
+            eval data.sarif.output --bundle scanners/dast/nuclei --stdin-input --format pretty
+          workdir: /src
