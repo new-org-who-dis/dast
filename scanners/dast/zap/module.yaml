@@ -20,7 +20,6 @@ steps:
                 /zap/zap-api-scan.py -t "$TARGET_URL" -f "$API_FORMAT" -l INFO -s -J report.json &>/dev/null
                 cat /zap/wrk/report.json
               }
-              mkdir /zap/wrk
               run || run
             '
           entrypoint: bash
