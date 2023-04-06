@@ -104,7 +104,12 @@ let root = {
 let app = express()
 
 app.use((req, res, next) => {
-  console.log(req.originalUrl);
+//  console.log(req.headers.authorization)
+//  if(req.headers.authorization == "ed62b1b3a68594c9f9a2a6a1a87ba14730a0457b") {
+//     next();
+//  } else {
+//    res.end('Unauthorized');
+//  }
   next();
 });
 
