@@ -2,11 +2,20 @@ let express = require("express")
 let { graphqlHTTP } = require("express-graphql")
 let { buildSchema, print } = require("graphql")
 
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database(':memory:');
+
+db.run('CREATE TABLE courses (id INT, title TEXT, author TEXT, description TEXT, topic TEXT, url TEXT)', function() {
+  const insertQuery = 'INSERT INTO courses (id, title, author, description, topic, url) VALUES (?, ?, ?, ?, ?, ?)';
+  coursesData.forEach(course => {
+    db.run(insertQuery, [course.id, course.title, course.author, course.description, course.topic, course.url]);
+  });
+});
 
 // GraphQL schema
 let schema = buildSchema(`
   type Query {
-    course(id: Int!): Course
+    course(id: String!): Course
     courseComplex(params: CourseParams): Course
     courseComplexMultiple(params: [CourseParams]): [Course]
     courses(topic: String): [Course]
@@ -61,13 +70,22 @@ let coursesData = [
   },
 ]
 
+
+
 // Resolvers
 let getCourse = function (args) {
-  let id = args.id
-  return coursesData.filter(course => {
-    return course.id == id
-  })[0]
-}
+  const id = args.id;
+  return new Promise((resolve, reject) => {
+    db.get(`SELECT * FROM courses WHERE id = ${id}`, (err, row) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(row);
+      }
+    });
+  });
+};
+
 let getCourseComplex = function (args) {
   let params = args.params
   return coursesData[0]
