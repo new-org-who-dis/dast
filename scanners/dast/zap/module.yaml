@@ -9,6 +9,10 @@ config:
 
 
 steps:
+  - run: |
+      touch report.json
+      chmod a+w report.json
+
   - scan:
       command:
         docker:
