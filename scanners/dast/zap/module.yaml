@@ -18,7 +18,7 @@ steps:
             -c '
               function run() {
                 /zap/zap-api-scan.py -t "$TARGET_URL" -f "$API_FORMAT" -l INFO -s -J report.json &>/dev/null
-                cat /zap/wrk/report.json
+                cat report.json
               }
               run || run
             '
@@ -26,6 +26,10 @@ steps:
           environment:
             TARGET_URL: ${TARGET_URL}
             API_FORMAT: ${API_FORMAT:-graphql}
+            ZAP_AUTH_HEADER_SITE: ${ZAP_AUTH_HEADER_SITE:-}
+            ZAP_AUTH_HEADER_VALUE: ${ZAP_AUTH_HEADER_VALUE:-}
+            ZAP_AUTH_HEADER: ${ZAP_AUTH_HEADER:-}
+
 
       format: sarif
       post-processor:
