@@ -128,6 +128,9 @@ app.use((req, res, next) => {
 //  } else {
 //    res.end('Unauthorized');
 //  }
+
+  res.set('X-Content-Type-Options ', 'nosniff');
+
   next();
 });
 
