@@ -23,6 +23,9 @@ jobs:
 
 
       - run: |
+          touch report.json
+          chmod a+w report.json
+
           docker run -i -v $PWD:/zap/wrk -e TARGET_URL=http://${{steps.get-ip.outputs.HOST}}:3001/graphql --entrypoint bash owasp/zap2docker-stable -c '/zap/zap-api-scan.py -t "$TARGET_URL" -f "graphql" -J report.json' || true
 
           cat report.json
