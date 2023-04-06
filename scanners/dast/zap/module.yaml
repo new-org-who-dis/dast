@@ -1,7 +1,7 @@
 api_version: 1.0
 
 id: dev/zap
-name: zap
+name: OWASP Zap API Scan
 namespace: dev/zap
 
 config:
