@@ -1,7 +1,12 @@
 import json
 import sys
+import re
 
 input = json.load(sys.stdin)
+
+
+def scrub_html(s, r=re.compile(r"<[^>]+>")):
+    return r.sub("", s)
 
 
 def cwe(cweid):
@@ -14,7 +19,16 @@ def cwe(cweid):
 def result(site, alert):
     return {
         "ruleId": alert["alertRef"],
-        "message": {"text": f'{alert["name"]} on {site["@name"]}'},
+        "message": {
+            "text": "\n\n".join(
+                [
+                    f'{alert["name"]} on {site["@name"]}',
+                    f'{scrub_html(alert["desc"])}',
+                    f'Solution: {scrub_html(alert["solution"])}',
+                    f'References: {scrub_html(alert["reference"])}',
+                ]
+            )
+        },
         "taxa": [
             {
                 "id": cwe(alert["cweid"]),
