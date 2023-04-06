@@ -30,6 +30,6 @@ jobs:
           api_token: ${{ secrets.BOOST_API_TOKEN }}
           api_endpoint: https://api.dev.boostsec.io
           registry_module: dast/zap
-          additional_args: --registry . --offline
+          additional_args: --registry .
           log_level: DEBUG
           cli_version: 1.0.0.dev0%2b2d40655
