@@ -18,6 +18,7 @@ steps:
         docker:
           image: owasp/zap2docker-stable
           workdir: /zap/wrk
+          user: 1000 # GHA uid is 1001 and Zap can't boot
           command: |
             -c '
               /zap/zap-api-scan.py -t "$TARGET_URL" -f "$API_FORMAT" -l INFO -s -J report.json
