@@ -22,37 +22,15 @@ jobs:
           npm i
           node index.js &
 
-#      - name: Run Dastardly Action Step
-#        continue-on-error: true
-#        uses: PortSwigger/dastardly-github-action@main
-#        with:
-#         target-url: 'http://${{steps.get-ip.outputs.HOST}}:3000'
-#
-#      - name: Publish Test Report
-#        if: always()
-#        uses: mikepenz/action-junit-report@v3
-#        with:
-#         report_paths: '**/dastardly-report.xml'
-#         require_tests: true
-#
-      - name: dast/nuclei
-        uses: boostsecurityio/boostsec-scanner-github@v4
-        env:
-          TARGET_URL: "http://${{steps.get-ip.outputs.HOST}}:3000"
+      - name: Run Dastardly Action Step
+        continue-on-error: true
+        uses: PortSwigger/dastardly-github-action@main
         with:
-          api_token: ${{ secrets.BOOST_API_TOKEN }}
-          api_endpoint: https://api.dev.boostsec.io
-          registry_module: dast/nuclei
-          additional_args: --registry .
-          log_level: DEBUG
+         target-url: 'http://${{steps.get-ip.outputs.HOST}}:3000'
 
-      - name: Nuclei - Vulnerability Scan
-        uses: projectdiscovery/nuclei-action@main
+      - name: Publish Test Report
+        if: always()
+        uses: mikepenz/action-junit-report@v3
         with:
-          target: 'http://localhost:3000'
-
-      - name: GitHub Workflow artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: nuclei.sarif
-          path: nuclei.sarif
+         report_paths: '**/dastardly-report.xml'
+         require_tests: true

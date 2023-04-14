@@ -122,12 +122,11 @@ let root = {
 let app = express()
 
 app.use((req, res, next) => {
-//  console.log(req.headers.authorization)
-//  if(req.headers.authorization == "ed62b1b3a68594c9f9a2a6a1a87ba14730a0457b") {
-//     next();
-//  } else {
-//    res.end('Unauthorized');
-//  }
+  //  if(req.headers.authorization == "ed62b1b3a68594c9f9a2a6a1a87ba14730a0457b") {
+  //     next();
+  //  } else {
+  //    res.end('Unauthorized');
+  //  }
 
   // res.set('X-Content-Type-Options ', 'nosniff');
 
@@ -148,7 +147,6 @@ app.get('/.env', (req, res) => {
   res.end('SECRET_TOKEN=ed62b1b3a68594c9f9a2a6a1a87ba14730a0457b');
 });
 
-
 app.listen(3001, () =>
-  console.log("Express GraphQL Server Now Running On localhost:8080/graphql"),
+  console.log("Express GraphQL Server Now Running On localhost:3001/graphql"),
 )

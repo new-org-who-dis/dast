@@ -16,7 +16,7 @@ app.get("/robots.txt", (req, res) => {
 
 app.get("/admin", (req, res) => {
   res.set("Content-Type", "text/plain");
-  res.end("ADMIN :o");
+  res.end("ADMIN");
 });
 
 app.get("/rxss", (req, res) => {

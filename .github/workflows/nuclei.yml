@@ -1,0 +1,45 @@
+name: "nuclei"
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  nuclei:
+    name: analyze
+    runs-on: ubuntu-latest
+    if: ${{ false  }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - id: get-ip
+        run: |
+          HOST=`ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+'`
+          echo "HOST=$HOST" >> $GITHUB_OUTPUT
+
+      - run: |
+          cd apps/node
+          npm i
+          node index.js &
+
+      - name: dast/nuclei
+        uses: boostsecurityio/boostsec-scanner-github@v4
+        env:
+          TARGET_URL: "http://${{steps.get-ip.outputs.HOST}}:3000"
+        with:
+          api_token: ${{ secrets.BOOST_API_TOKEN }}
+          api_endpoint: https://api.dev.boostsec.io
+          registry_module: dast/nuclei
+          additional_args: --registry .
+          log_level: DEBUG
+
+      - name: Nuclei - Vulnerability Scan
+        uses: projectdiscovery/nuclei-action@main
+        with:
+          target: 'http://localhost:3000'
+
+      - name: GitHub Workflow artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nuclei.sarif
+          path: nuclei.sarif
