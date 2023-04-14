@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  dastardly:
+  zap:
     name: analyze
     runs-on: ubuntu-latest
     steps:
