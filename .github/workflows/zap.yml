@@ -21,7 +21,7 @@ jobs:
           echo "HOST=$HOST" >> $GITHUB_OUTPUT
 
       - run: |
-          cd apps/gql-api
+          cd apps/node
           yarn
           node index.js &
 
