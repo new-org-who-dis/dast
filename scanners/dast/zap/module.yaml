@@ -33,7 +33,6 @@ steps:
             ZAP_AUTH_HEADER_VALUE: ${ZAP_AUTH_HEADER_VALUE:-}
             ZAP_AUTH_HEADER: ${ZAP_AUTH_HEADER:-}
 
-
       format: sarif
       post-processor:
         docker:

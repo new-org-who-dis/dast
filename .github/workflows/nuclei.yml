@@ -2,6 +2,10 @@ name: "nuclei"
 
 on:
   workflow_dispatch:
+    inputs:
+      nuclei:
+        type: boolean
+        default: false
   push:
 
 concurrency:
@@ -37,12 +41,14 @@ jobs:
           log_level: DEBUG
 
       - name: Nuclei - Vulnerability Scan
+        if: ${{ inputs.nuclei }}
         uses: projectdiscovery/nuclei-action@main
         with:
           target: 'http://localhost:3000'
 
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v2
+        if: ${{ inputs.nuclei }}
         with:
           name: nuclei.sarif
           path: nuclei.sarif
