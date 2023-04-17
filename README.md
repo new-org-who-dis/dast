@@ -22,9 +22,9 @@ yarn
 node index.js
 ```
 
-http://localhost:3000/
+http://localhost:3001/
 
 ## Module Prototypes
 
-- [dast/nuclei](scanners/dast/nuclei)
-- [dast/zap](scanners/dast/zap)
+- [dast/nuclei](scanners/dast/nuclei/module.yaml)
+- [dast/zap](scanners/dast/zap/module.yaml)
