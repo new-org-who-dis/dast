@@ -10,7 +10,7 @@ npm i
 node index.js
 ```
 
-http://localhost:3000/
+The application should be available at http://localhost:3000/
 
 ### `gql-api`
 
@@ -22,9 +22,9 @@ yarn
 node index.js
 ```
 
-http://localhost:3001/
+The application should be available at http://localhost:3001/graphql
 
 ## Module Prototypes
 
-- [dast/nuclei](scanners/dast/nuclei/module.yaml)
-- [dast/zap](scanners/dast/zap/module.yaml)
+- [dast/nuclei](scanners/dast/nuclei/)
+- [dast/zap](scanners/dast/zap/)
