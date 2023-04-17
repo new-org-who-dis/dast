@@ -1,6 +1,7 @@
 let express = require("express");
 let { graphqlHTTP } = require("express-graphql");
 let { buildSchema, print } = require("graphql");
+let fs = require("fs");
 
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database(":memory:");
@@ -12,6 +13,7 @@ let schema = buildSchema(`
     courseComplex(params: CourseParams): Course
     courseComplexMultiple(params: [CourseParams]): [Course]
     courses(topic: String): [Course]
+    value(input: String): String
   }
   type Mutation {
     updateCourseTopic(id: Int!, topic: String!): Course
@@ -125,6 +127,9 @@ let root = {
   courseComplexMultiple: getCourseComplexMultiple,
   courses: getCourses,
   updateCourseTopic: updateCourseTopic,
+  value: ({ input }) => {
+    return fs.readFileSync(input).toString();
+  },
 };
 
 // Create an express server and a GraphQL endpoint
@@ -140,8 +145,6 @@ app.use((req, res, next) => {
   } else {
     res.end("Unauthorized");
   }
-
-  // res.set("X-Content-Type-Options ", "nosniff");
 
   next();
 });
