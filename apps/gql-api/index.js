@@ -140,7 +140,10 @@ app.use((req, res, next) => {
     return next();
   }
 
-  if (req.headers.authorization == "ed62b1b3a68594c9f9a2a6a1a87ba14730a0457b") {
+  if (
+    req.headers.authorization ==
+    "Bearer ed62b1b3a68594c9f9a2a6a1a87ba14730a0457b"
+  ) {
     next();
   } else {
     res.end("Unauthorized");
