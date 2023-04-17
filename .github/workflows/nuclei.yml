@@ -25,14 +25,14 @@ jobs:
           echo "HOST=$HOST" >> $GITHUB_OUTPUT
 
       - run: |
-          cd apps/node
-          npm i
+          cd apps/gql-api
+          yarn
           node index.js &
 
       - name: dast/nuclei
         uses: boostsecurityio/boostsec-scanner-github@v4
         env:
-          TARGET_URL: "http://${{steps.get-ip.outputs.HOST}}:3000"
+          TARGET_URL: "http://${{steps.get-ip.outputs.HOST}}:3001/graphql"
         with:
           api_token: ${{ secrets.BOOST_API_TOKEN }}
           api_endpoint: https://api.dev.boostsec.io
